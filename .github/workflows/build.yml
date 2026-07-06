@@ -5,6 +5,10 @@ on:
     tags: ["v*"]
   workflow_dispatch:
 
+# Needed for the release job to create a GitHub release and upload the exe.
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
