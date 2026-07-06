@@ -27,6 +27,10 @@ elseif(MSVC)
     set_property(TARGET Namer PROPERTY
                  MSVC_RUNTIME_LIBRARY "MultiThreaded")
     target_compile_options(Namer PRIVATE /utf-8 /W3)
+    target_compile_definitions(Namer PRIVATE _CRT_SECURE_NO_WARNINGS)
+    # We ship our own manifest via namer.rc (RT_MANIFEST); stop the MSVC linker
+    # embedding its default one, which would collide (CVT1100 duplicate resource).
+    target_link_options(Namer PRIVATE /MANIFEST:NO)
 endif()
 
 install(TARGETS Namer RUNTIME DESTINATION bin)
