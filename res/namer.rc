@@ -1,0 +1,45 @@
+#include <windows.h>
+#include "resource.h"
+
+IDI_APP ICON "../assets/icon.ico"
+
+1 RT_MANIFEST "namer.manifest"
+
+IDD_SETTINGS DIALOGEX 0, 0, 280, 96
+STYLE DS_MODALFRAME | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 9, "Segoe UI"
+BEGIN
+    LTEXT           "OpenRouter API key (get one at openrouter.ai/keys):",
+                    -1, 10, 8, 260, 10
+    EDITTEXT        IDC_KEY, 10, 20, 260, 13, ES_PASSWORD | ES_AUTOHSCROLL
+    AUTOCHECKBOX    "Show key", IDC_SHOWKEY, 10, 38, 80, 10
+    LTEXT           "Stored in %APPDATA%\\Namer\\openrouter_key. Leave empty to clear.",
+                    -1, 10, 54, 260, 18
+    DEFPUSHBUTTON   "OK", IDOK, 166, 76, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 220, 76, 50, 14
+END
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     0,1,0,0
+PRODUCTVERSION  0,1,0,0
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription",  "Namer - name ideas for anything"
+            VALUE "FileVersion",      "0.1.0"
+            VALUE "ProductName",      "Namer"
+            VALUE "ProductVersion",   "0.1.0"
+            VALUE "OriginalFilename", "Namer.exe"
+            VALUE "LegalCopyright",   "MIT License"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

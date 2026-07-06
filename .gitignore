@@ -1,0 +1,10 @@
+build/
+dist/
+out/
+*.exe
+*.o
+*.obj
+*.res
+.vs/
+CMakeCache.txt
+CMakeFiles/

@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure (MSVC)
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Collect binary
+        shell: bash
+        run: |
+          mkdir dist
+          # MSVC puts the exe under the config subdir; MinGW does not.
+          cp build/Release/Namer.exe dist/Namer.exe 2>/dev/null || \
+            cp build/Namer.exe dist/Namer.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Namer-windows
+          path: dist/Namer.exe
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/Namer.exe
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
